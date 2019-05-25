@@ -9,6 +9,9 @@ body {
   font-family: 'Shadows Into Light', cursive;
 }
 .container {
+
+  display: flex;
+  flex-direction: column;
   position: relative;
   border: 1px solid #f2efe2;
   width: 98vw;
@@ -18,11 +21,11 @@ body {
   background: #f2efe2;
   padding: 0.2rem 1rem;
   color: #1e2440;
-  overflow: scroll;
+  /* overflow: scroll; */
   height: 90%;
 }
 .text-box {
-  /* max-height: 70vh; */
+  height:100%;
   overflow: scroll;
 }
 .text-box:focus {

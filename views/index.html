@@ -1,33 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Speech Recognition</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Speech Recognition</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+		integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
-<!-- load font awesome here for icon used on the page -->
+	<!-- load font awesome here for icon used on the page -->
 </head>
-<body>
-  <div class="container"> <!--page container -->
-    <div class="text-box" id="text" contenteditable="true">
 
-    <textarea class="textarea" id="textarea" prompt="Talk here">
+<body>
+	<div class="container">
+		<!--page container -->
+		<div class="text-box" id="text" contenteditable="true">
+
+			<textarea class="textarea" id="textarea" prompt="Talk here">
 
     </textarea>
-    </div> <!--text box which will contain spoken text -->
-    <button id="start">Start</button>
+		</div>
+		<!--text box which will contain spoken text -->
+		<div id="footer">
+			<button id="start">Start</button>
+			<button id="stop">Stop</button>
+			<i class="fa fa-microphone"></i> <!-- microphone icon to be clicked before speaking -->
+			<p class="status" id="status" contenteditable="true">
+		</div>
+	</div>
 
-    <button id="stop">Stop</button>
-      <i class="fa fa-microphone"></i> <!-- microphone icon to be clicked before speaking -->
-
-    <p class="status" id="status" contenteditable="true"></div> <!--text box which will contain spoken text -->
-
-   </div>
-<!--   <audio class="sound" src="chime.mp3"></audio> -->
-  <!-- sound to be played when we click icon => http://soundbible.com/1598-Electronic-Chime.html -->
-  <script src="client.js"></script> <!-- link to index.js script -->
+	</div>
+	<!--   <audio class="sound" src="chime.mp3"></audio> -->
+	<!-- sound to be played when we click icon => http://soundbible.com/1598-Electronic-Chime.html -->
+	<script src="client.js"></script> <!-- link to index.js script -->
 </body>
+
 </html>
