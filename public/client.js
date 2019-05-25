@@ -1,3 +1,4 @@
+
 const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
 console.log("start");
 let TextArea = document.querySelector('.textarea');
@@ -5,6 +6,7 @@ let container = document.querySelector('.text-box');
 container.appendChild(TextArea);
 // const sound = document.querySelector('.sound');
 let status = document.querySelector('#status')
+let dictationRunning = false;
 const setStatus = (text) => {
   status.textContent = text;
 }
@@ -20,6 +22,7 @@ const icon = document.querySelector('i.fa.fa-microphone')
 icon.addEventListener('click', () => {
   // sound.play();\
   console.log("listeningf")
+  dictationRunning = true;
   dictate();
 });
 
@@ -27,11 +30,14 @@ let start = document.querySelector("#start")
 start.addEventListener('click', () => {
   console.log("start");
   setStatus("start pressed");
+  dictationRunning = true;
+ 
 
 });
 let stop = document.querySelector("#stop")
 stop.addEventListener('click', () => {
 setStatus("stop pressed");
+dictationRunning = false;
 });
 
 let events = ["audiostart","soundstart","speechstart","speechend","soundend","audioend","nomatch", "error", "start","end"];
@@ -47,7 +53,7 @@ const dictate = () => {
   recognition.maxAlternatives = 3;
   // recognition.grammars = speechRecognitionList;
   recognition.start();
-  let consolidated = ""
+  let consolidated = TextArea.textContent;
   setStatus("listening");
 
   recognition.onerror = (e) => {
@@ -56,6 +62,7 @@ const dictate = () => {
   }
   recognition.onend = () => {
     setStatus("end " + error.error)
+     beep(10, 520, 200)
     if(dictationRunning){
       dictate()
     }
@@ -78,12 +85,14 @@ const dictate = () => {
       } else {
         provisional = "";
         console.log(newSegment)
-        beep(10, 520, 200)
+       
         consolidated += newSegment;
         nextToScan = i + 1;
+
       }
     }
     TextArea.textContent = consolidated + provisional;
+
 //     if (event.results[0].isFinal) {
 //       console.log("FINAL")
 //       //aggregate += speechToText;
@@ -121,7 +130,7 @@ let beep = (vol, freq, duration) => {
   v.stop(a.currentTime+duration*0.001)
 }
 
-beep(10, 520, 200)
+beep(10, 300, 200)
 
 
 
