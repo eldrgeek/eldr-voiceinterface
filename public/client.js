@@ -1,9 +1,8 @@
 const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
-const synth = window.speechSynthesis;
 console.log("start");
-let paragraph = document.createElement('p');
+let TextArea = document.querySelector('.textarea');
 let container = document.querySelector('.text-box');
-container.appendChild(paragraph);
+container.appendChild(TextArea);
 // const sound = document.querySelector('.sound');
 let status = document.querySelector('#status')
 const setStatus = (text) => {
@@ -37,23 +36,6 @@ setStatus("stop pressed");
 
 let events = ["audiostart","soundstart","speechstart","speechend","soundend","audioend","nomatch", "error", "start","end"];
 events.map((name)=> recognition["on"+ name] = () => console.log("recognition " + name ))
-let synthEvents = ["audiostart", "boundary","mark","soundstart","speechstart","speechend","soundend","audioend","result","nomatch"];
-synthEvents.map((name)=> recognition["on"+ name] = () => console.log("synth " + name ))
-let a=new AudioContext() // browsers limit the number of concurrent audio contexts, so you better re-use'em
-
-let beep = (vol, freq, duration) => {
-  let v=a.createOscillator()
-  let u=a.createGain()
-  v.connect(u)
-  v.frequency.value=freq
-  v.type="square"
-  u.connect(a.destination)
-  u.gain.value=vol*0.01
-  v.start(a.currentTime)
-  v.stop(a.currentTime+duration*0.001)
-} 
-
-beep(10, 520, 200)
 
 let error = "no error"
 
@@ -62,7 +44,7 @@ const dictate = () => {
   recognition.lang = 'en-US';
   recognition.interimResults = true;
   recognition.continuous = false;
-  recognition.maxAlternatives = 3;  
+  recognition.maxAlternatives = 3;
   // recognition.grammars = speechRecognitionList;
   recognition.start();
   let consolidated = ""
@@ -101,7 +83,7 @@ const dictate = () => {
         nextToScan = i + 1;
       }
     }
-    paragraph.textContent = consolidated + provisional;
+    TextArea.textContent = consolidated + provisional;
 //     if (event.results[0].isFinal) {
 //       console.log("FINAL")
 //       //aggregate += speechToText;
@@ -111,17 +93,37 @@ const dictate = () => {
 //       if (speechToText.includes('what is the time')) {
 //           speak(getTime);
 //       };
-      
+
 //       if (speechToText.includes('what is today\'s date')) {
 //           speak(getDate);
 //       };
-      
+
 //       if (speechToText.includes('what is the weather in')) {
 //           getTheWeather(speechToText);
 //       };
 //     }
   }
 }
+const synth = window.speechSynthesis;
+let synthEvents = ["audiostart", "boundary","mark","soundstart","speechstart","speechend","soundend","audioend","result","nomatch"];
+synthEvents.map((name)=> recognition["on"+ name] = () => console.log("synth " + name ))
+let a=new AudioContext() // browsers limit the number of concurrent audio contexts, so you better re-use'em
+
+let beep = (vol, freq, duration) => {
+  let v=a.createOscillator()
+  let u=a.createGain()
+  v.connect(u)
+  v.frequency.value=freq
+  v.type="square"
+  u.connect(a.destination)
+  u.gain.value=vol*0.01
+  v.start(a.currentTime)
+  v.stop(a.currentTime+duration*0.001)
+}
+
+beep(10, 520, 200)
+
+
 
 var voiceList = [];
 let voices = {}
@@ -157,7 +159,7 @@ function sayNext() {
   if(messageNo >= messages.length) {
     messageNo = 1;
   }
-  
+
 }
 
 let sayIt = function (message) {
@@ -200,7 +202,7 @@ const speakfn = (action) => {
 
 
 const speak = (utterance) => {
-  console.log("saying ", utterance); 
+  console.log("saying ", utterance);
   synth.speak(new SpeechSynthesisUtterance(utterance));
 };
 const getTime = () => {
@@ -214,7 +216,7 @@ const getDate = () => {
 };
 
 const getTheWeather = (speech) => {
-  fetch(`http://api.openweathermap.org/data/2.5/weather?q=${speech.split(' ')[5]}&appid=58b6f7c78582bffab3936dac99c31b25&units=metric`) 
+  fetch(`http://api.openweathermap.org/data/2.5/weather?q=${speech.split(' ')[5]}&appid=58b6f7c78582bffab3936dac99c31b25&units=metric`)
   .then(function(response){
     return response.json();
   })
